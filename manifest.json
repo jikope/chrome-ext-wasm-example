@@ -1,0 +1,27 @@
+{ // Required
+    "manifest_version": 3, // Only works for Chrome, for firefox use version 2
+    "name": "WASM Hello World",
+    "version": "1.0",
+    "description":"Example of C WASM web extension using clang",
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "WASM Hello World"
+    },
+    "web_accessible_resources": [
+        {
+            "matches"   : [ "https://www.google.com/*" ],
+            "resources" : [ "*.png", "/script.js", "/modules/*.mjs", "main.wasm"]
+        }
+    ],
+    // Automatically run wrapper.js at google.com
+    "content_scripts" : [
+        {
+            "run_at"    : "document_end",
+            "js"        : [ "wrapper.js" ],
+            "matches"   : [ "https://www.google.com/*" ]
+        }
+    ],
+    "content_security_policy" : {
+        "extension_pages" : "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self';"
+    }
+}
